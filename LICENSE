@@ -1,0 +1,13 @@
+---
+
+### 🛠️ Step-by-Step: How to Add This to GitHub
+
+Since you are looking at your repository page right now, here is exactly how to put this up:
+
+1. **Click the Green "New" Button** on the top right of your repository list (visible in your screenshot).
+2. **Name the Repository:** Call it `customtkinter-calculator`.
+3. **Initialize the Repository:** * Check the box that says **"Add a README file"** (this gives you a blank slate to paste the code above into).
+   * Check the box for **"Add .gitignore"** and select **Python** from the dropdown (this keeps temporary cache files off your profile).
+   * Choose a license if you want (like the **MIT License**).
+4. **Paste the Content:** Click the pencil icon on the default `README.md` file GitHub creates, clear out everything, and paste the markdown text block provided above.
+5. **Add Repository Topics:** On the right sidebar of your new repository page, click the gear icon next to "About" and add tags like: `python`, `gui`, `customtkinter`, `calculator`. This matches the professional look of your `hot-beans-web` project!
