@@ -2,8 +2,8 @@
 
 A sleek, modern GUI calculator built with Python and the `customtkinter` library. This application features a responsive grid system, dark mode styling, and basic arithmetic execution.
 
-![Calculator Preview](<img width="476" height="737" alt="image" src="https://github.com/user-attachments/assets/605cd8c7-0313-4654-88ed-f9714e07fab2" />
-)
+<img width="476" height="737" alt="image" src="https://github.com/user-attachments/assets/10dfd23a-3a80-4176-b1c7-e0aeaa44faee" />
+
 
 ## 🚀 Features
 
