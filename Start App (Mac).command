@@ -1,155 +1,103 @@
 #!/bin/bash
-# To-Do List App - macOS Startup Script
-# Double-click this file to set up and launch the app.
-# If macOS blocks it the first time, right-click -> Open -> Open.
 
-cd "$(dirname "$0")"
+# Calculator App - macOS Launcher
+# Double-click this file to set up and run the app.
+# If macOS blocks it the first time, right-click -> Open, then confirm.
 
-echo "==================================================="
-echo "  To-Do List App - macOS Startup Script"
-echo "==================================================="
-echo
+cd "$(dirname "$0")" || exit 1
 
-# ---------------------------------------------------
-# 1. Verify Python is installed
-# ---------------------------------------------------
-echo "[1/6] Checking for Python installation..."
+echo "============================================================="
+echo "  Calculator App - macOS Launcher (Was made by Oleh Datsyk)"
+echo "============================================================="
+echo ""
 
-PYTHON_CMD=""
+# --- Step 1: Check Python is installed ---
+echo "[1/5] Checking for Python..."
 if command -v python3 >/dev/null 2>&1; then
     PYTHON_CMD="python3"
 elif command -v python >/dev/null 2>&1; then
     PYTHON_CMD="python"
-fi
-
-if [ -z "$PYTHON_CMD" ]; then
-    echo
-    echo "[ERROR] Python was not found on this system."
-    echo "Please install Python 3.9 or later from https://www.python.org/downloads/"
-    echo "See INSTRUCTION.md for a full step-by-step guide."
-    echo
-    read -p "Press Enter to exit..."
-    exit 1
-fi
-
-$PYTHON_CMD --version
-echo "Python found successfully (using '$PYTHON_CMD')."
-echo
-
-# ---------------------------------------------------
-# 2. Locate the application file
-# ---------------------------------------------------
-APP_FILE=""
-if [ -f "ToDo_App.py" ]; then
-    APP_FILE="ToDo_App.py"
-elif [ -f "ToDo App.py" ]; then
-    APP_FILE="ToDo App.py"
 else
-    APP_FILE=$(find . -maxdepth 1 -name "*.py" | head -n 1)
-fi
-
-if [ -z "$APP_FILE" ]; then
-    echo "[ERROR] Could not find the application's .py file in this folder."
-    echo "Make sure this script is in the same folder as the To-Do app."
-    echo
-    read -p "Press Enter to exit..."
+    echo ""
+    echo "ERROR: Python was not found on your system."
+    echo "Please install Python from https://www.python.org/downloads/"
+    echo ""
+    read -n 1 -s -r -p "Press any key to close..."
     exit 1
 fi
-echo "Using application file: $APP_FILE"
-echo
+echo "    Found $($PYTHON_CMD --version)"
+echo ""
 
-# ---------------------------------------------------
-# 3. Create virtual environment if necessary
-# ---------------------------------------------------
-echo "[2/6] Checking for virtual environment..."
-if [ ! -f "venv/bin/activate" ]; then
-    echo "No virtual environment found. Creating one now..."
-    $PYTHON_CMD -m venv venv
+# --- Step 2: Create virtual environment if missing ---
+echo "[2/5] Checking for virtual environment..."
+if [ ! -f ".venv/bin/activate" ]; then
+    echo "    No virtual environment found. Creating one now..."
+    "$PYTHON_CMD" -m venv .venv
     if [ $? -ne 0 ]; then
-        echo "[ERROR] Failed to create the virtual environment."
-        read -p "Press Enter to exit..."
+        echo ""
+        echo "ERROR: Failed to create the virtual environment."
+        read -n 1 -s -r -p "Press any key to close..."
         exit 1
     fi
-    echo "Virtual environment created successfully."
+    echo "    Virtual environment created."
 else
-    echo "Virtual environment already exists."
+    echo "    Virtual environment already exists."
 fi
-echo
+echo ""
 
-# ---------------------------------------------------
-# 4. Activate the virtual environment
-# ---------------------------------------------------
-echo "[3/6] Activating virtual environment..."
-source "venv/bin/activate"
+# --- Step 3: Activate virtual environment ---
+echo "[3/5] Activating virtual environment..."
+# shellcheck disable=SC1091
+source ".venv/bin/activate"
 if [ $? -ne 0 ]; then
-    echo "[ERROR] Failed to activate the virtual environment."
-    read -p "Press Enter to exit..."
+    echo ""
+    echo "ERROR: Failed to activate the virtual environment."
+    read -n 1 -s -r -p "Press any key to close..."
     exit 1
 fi
-echo "Virtual environment activated."
-echo
+echo "    Activated."
+echo ""
 
-# ---------------------------------------------------
-# 5. Install missing dependencies
-# ---------------------------------------------------
-echo "[4/6] Checking dependencies..."
+# --- Step 4: Install dependencies ---
+echo "[4/5] Checking dependencies..."
 python -c "import customtkinter" >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-    echo "Installing missing dependency: customtkinter ..."
+    echo "    Installing missing dependency: customtkinter..."
     if [ -f "requirements.txt" ]; then
         pip install -r requirements.txt
     else
         pip install customtkinter
     fi
     if [ $? -ne 0 ]; then
-        echo "[ERROR] Failed to install dependencies. Check your internet connection."
-        read -p "Press Enter to exit..."
+        echo ""
+        echo "ERROR: Failed to install dependencies. Check your internet connection."
+        read -n 1 -s -r -p "Press any key to close..."
         exit 1
     fi
 else
-    echo "All dependencies already installed."
+    echo "    All dependencies already installed."
 fi
-echo
+echo ""
 
-# ---------------------------------------------------
-# 6. Verify the .env file (optional for this app)
-# ---------------------------------------------------
-echo "[5/6] Checking for .env file..."
-if [ -f ".env.example" ]; then
-    if [ ! -f ".env" ]; then
-        echo "[NOTE] No .env file found, but .env.example exists."
-        echo "This app does not currently require one, but if future"
-        echo "features need configuration, copy .env.example to .env"
-        echo "and fill in the required values."
-    else
-        echo ".env file found."
-    fi
-else
-    echo "No .env.example present - this app does not require environment"
-    echo "variables to run."
-fi
-echo
-
-# ---------------------------------------------------
-# 7. Launch the application
-# ---------------------------------------------------
-echo "[6/6] Launching To-Do List App..."
-echo
-python "$APP_FILE"
-STATUS=$?
-
-if [ $STATUS -ne 0 ]; then
-    echo
-    echo "==================================================="
-    echo "[ERROR] The application closed with an error."
-    echo "Review the message above, or see the Troubleshooting"
-    echo "section of INSTRUCTION.md for help."
-    echo "==================================================="
-    echo
-    read -p "Press Enter to exit..."
-    exit 1
+# --- Step 5: Check for optional .env file ---
+if [ -f ".env.example" ] && [ ! -f ".env" ]; then
+    echo "NOTE: A .env.example file was found but no .env file exists."
+    echo "      Copy .env.example to .env and fill in any required values."
+    echo ""
 fi
 
-echo
-echo "Application closed normally."
-read -p "Press Enter to exit..."
+# --- Step 6: Launch the application ---
+echo "[5/5] Launching Calculator..."
+echo ""
+python Calculator.py
+APP_EXIT_CODE=$?
+
+if [ $APP_EXIT_CODE -ne 0 ]; then
+    echo ""
+    echo "==============================================="
+    echo "  The application closed with an error."
+    echo "  Error code: $APP_EXIT_CODE"
+    echo "  Review any messages above for details."
+    echo "==============================================="
+    read -n 1 -s -r -p "Press any key to close..."
+fi

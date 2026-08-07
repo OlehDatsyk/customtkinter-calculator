@@ -1,93 +1,82 @@
-# To-Do List App
+# Calculator
 
-A simple, elegant desktop to-do list application built with Python and [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter). Add tasks, remove the most recent one, or clear your whole list - all through a clean, dark-themed GUI.
+A simple, modern desktop calculator built with Python and [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter). It supports the four basic arithmetic operations plus parentheses, with a clean dark-themed interface.
 
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
-![License](https://img.shields.io/badge/license-unspecified-lightgrey)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)
+![License](https://img.shields.io/badge/license-unspecified-red)
 
 ## Features
 
-- ✅ Add new tasks through a simple text entry field
-- ✅ View all tasks in a numbered, scrollable display
-- ✅ Delete the most recently added task
-- ✅ Clear the entire task list in one click
-- ✅ Dark mode UI with a modern, rounded aesthetic
+- Clean, modern dark-mode UI (CustomTkinter)
+- Basic operations: addition, subtraction, multiplication, division
+- Parentheses support for grouped expressions
+- Decimal number support
+- Clear (`C`) button to reset the current expression
+- Large, easy-to-tap button layout
 
 ## Screenshot
 
-> _Add a screenshot of the running app here (e.g. `docs/screenshot.png`) so visitors can see the UI before running it._
+*(Add a screenshot of the running app here, e.g. `docs/screenshot.png`)*
 
 ## Requirements
 
 - Python 3.9 or later
-- [`customtkinter`](https://pypi.org/project/customtkinter/)
+- [customtkinter](https://pypi.org/project/customtkinter/)
 
-If you're new to Python, virtual environments, or the terminal, see **[INSTRUCTION.md](INSTRUCTION.md)** for a complete beginner-friendly walkthrough.
+> New to Python, Git, or VS Code? Follow the complete beginner-friendly walkthrough in [`INSTRUCTION.md`](./INSTRUCTION.md) instead - it explains every step from scratch.
 
 ## Quick Start
 
-### Windows
-
-Double-click **`Start App.bat`**. It will set up everything automatically and launch the app.
-
-### macOS
-
-Double-click **`Start App (Mac).command`**. It will set up everything automatically and launch the app.
-
-### Manual Setup (any OS)
-
 ```bash
 # 1. Clone the repository
-git clone <your-repo-url>
-cd <your-repo-folder>
+git clone <your-repository-url>
+cd <repository-folder>
 
-# 2. Create a virtual environment
-python -m venv venv
-
-# 3. Activate it
+# 2. Create and activate a virtual environment
+python -m venv .venv
 # Windows:
-venv\Scripts\activate
+.venv\Scripts\activate
 # macOS/Linux:
-source venv/bin/activate
+source .venv/bin/activate
 
-# 4. Install dependencies
+# 3. Install dependencies
 pip install customtkinter
 
-# 5. Run the app
-python "ToDo_App.py"
+# 4. Run the app
+python Calculator.py
 ```
+
+Alternatively, on Windows double-click **`Start App.bat`**, or on macOS double-click **`Start App (Mac).command`** - both scripts will set everything up automatically after the first run.
 
 ## Usage
 
-1. Type a task into the input field labeled **"Type a new task here..."**
-2. Click **Add Task** (or press Enter after focusing the button) to add it to your list
-3. Click **Delete Last** to remove the most recently added task
-4. Click **Clear All** to wipe the entire list
-
-> **Note:** Tasks are stored in memory only. Closing the app will erase your task list, since there is currently no file or database persistence.
+1. Launch the app - a calculator window will open.
+2. Tap the number and operator buttons to build an expression (e.g. `12 * (3 + 4)`).
+3. Press `=` to evaluate the expression.
+4. Press `C` to clear the display and start a new calculation.
 
 ## Project Structure
 
 ```
 .
-├── ToDo_App.py # Main application file
+├── Calculator.py # Main application (UI + logic)
 ├── README.md # This file
-├── INSTRUCTION.md # Beginner setup & usage guide
-├── Start App.bat # Windows launcher script
-└── Start App (Mac).command # macOS launcher script
+├── INSTRUCTION.md # Complete beginner setup & usage guide
+├── Start App.bat # Windows one-click launcher
+└── Start App (Mac).command # macOS one-click launcher
 ```
 
 ## Known Limitations
 
-- No persistent storage - tasks reset every time the app is closed (see `PROJECT_REVIEW.md` for details and suggestions)
-- No way to delete or edit a *specific* task - only the last one added
-- No task completion/checkbox tracking
+- Expressions are evaluated with Python's built-in `eval()`, restricted to the characters produced by the on-screen buttons. See `PROJECT_REVIEW.md` for a full discussion of this design choice and hardening suggestions.
+- No calculation history or memory functions yet.
+- No automated tests included.
 
 ## Contributing
 
-Issues and pull requests are welcome. Please open an issue first to discuss any significant changes.
+Contributions are welcome. Please open an issue to discuss any significant change before submitting a pull request.
 
 ## License
 
-No license has been specified for this project yet. See `PROJECT_REVIEW.md` for why adding one is recommended before publishing publicly.
+No license file is currently included in this repository. Until one is added, all rights are reserved by the project author. See `PROJECT_REVIEW.md` for a recommendation on choosing an open-source license.
